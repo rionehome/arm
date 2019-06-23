@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg="arm" name="arm" type="main.py" output="screen">
+  </node>
+
+</launch>
+
