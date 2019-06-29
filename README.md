@@ -4,7 +4,9 @@
 Crane+v2 用のパッケージ
 
 ## Setup
+詳細はここに書いてある
 
+https://gbiggs.github.io/ros_moveit_rsj_tutorial/manipulators_and_moveit.html
 
 moveitをダウンロード
 ```
