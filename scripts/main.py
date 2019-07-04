@@ -6,7 +6,7 @@ import threading
 
 import rospy
 import rospkg
-from std_msgs.msg import Float64, String
+from std_msgs.msg import Float64, Int32
 
 
 class Main:
@@ -38,7 +38,7 @@ class Main:
             rospy.Publisher(self.motor_topics[4], Float64, queue_size=10)
         ]
 
-        self.open_position=[
+        self.open_position = [
             0.0,
             -0.7,
             -1.4,
@@ -54,18 +54,22 @@ class Main:
             0.6
         ]
 
-        rospy.Subscriber("/arm/control", String, self.callback)
+        rospy.Subscriber("/arm/control", Int32, self.callback)
+
+        rospy.sleep(5)
+
+        for i in range(5):
+            self.publishers[i].publish(self.open_position[i])
+
         rospy.spin()
 
     def callback(self, message):
-        # type: (String) -> None
-        for i in range(4):
-            self.publishers[i].publish(self.open_position[i])
-        rospy.sleep(3.0)
-        self.publishers[4].publish(-0.6)
-        rospy.sleep(3.0)
-        for i in range(5):
-            self.publishers[i].publish(self.close_position[i])
+        # type: (Int32) -> None
+        id = message.data
+        if id == 1:
+            self.publishers[4].publish(-0.6)
+        elif id == 0:
+            self.publishers[4].publish(0.6)
 
 
 if __name__ == "__main__":

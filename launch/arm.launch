@@ -1,7 +1,6 @@
 <launch>
 
   <include file="$(find crane_plus_hardware)/launch/start_arm_standalone.launch"/>
-  <include file="$(find crane_plus_moveit_config)/launch/move_group.launch"/>
   <node pkg="arm" name="arm" type="main.py" output="screen">
   </node>
 
