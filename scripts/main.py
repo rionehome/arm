@@ -38,7 +38,7 @@ class Main:
             rospy.Publisher(self.motor_topics[4], Float64, queue_size=10)
         ]
 
-        self.open_position = [
+        self.default_position = [
             0.0,
             -0.7,
             -1.4,
@@ -46,12 +46,12 @@ class Main:
             0
         ]
 
-        self.close_position = [
+        self.release_position = [
             0.0,
-            -0.7,
-            -1.4,
-            0.7,
-            0.6
+            0.5,
+            -1.0,
+            -1.0,
+            0
         ]
 
         rospy.Subscriber("/arm/control", Int32, self.callback)
@@ -59,7 +59,7 @@ class Main:
         rospy.sleep(5)
 
         for i in range(5):
-            self.publishers[i].publish(self.open_position[i])
+            self.publishers[i].publish(self.default_position[i])
 
         rospy.spin()
 
@@ -68,8 +68,17 @@ class Main:
         id = message.data
         if id == 1:
             self.publishers[4].publish(-0.6)
-        elif id == 0:
+        elif id == 2:
             self.publishers[4].publish(0.6)
+        elif id == 3:
+            for i in range(4):
+                self.publishers[i].publish(self.release_position[i])
+            rospy.sleep(3)
+            self.publishers[4].publish(-0.6)
+            rospy.sleep(3)
+        elif id == 4:
+            for i in range(5):
+                self.publishers[i].publish(self.default_position[i])
 
 
 if __name__ == "__main__":
