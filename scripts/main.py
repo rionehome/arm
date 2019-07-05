@@ -75,7 +75,7 @@ class Main:
                 self.publishers[i].publish(self.release_position[i])
             rospy.sleep(3)
             self.publishers[4].publish(-0.6)
-            rospy.sleep(3)
+            rospy.sleep(2)
         elif id == 4:
             for i in range(5):
                 self.publishers[i].publish(self.default_position[i])
