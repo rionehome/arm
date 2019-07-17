@@ -6,7 +6,7 @@ import threading
 
 import rospy
 import rospkg
-from std_msgs.msg import Float64, Int32
+from std_msgs.msg import Float64, String
 
 
 class Main:
@@ -64,19 +64,19 @@ class Main:
         rospy.spin()
 
     def callback(self, message):
-        # type: (Int32) -> None
-        id = message.data
-        if id == 1:
+        # type: (String) -> None
+        command = message.data
+        if command == "open":
             self.publishers[4].publish(-0.6)
-        elif id == 2:
+        elif command == "close":
             self.publishers[4].publish(0.6)
-        elif id == 3:
+        elif command == "release":
             for i in range(4):
                 self.publishers[i].publish(self.release_position[i])
             rospy.sleep(3)
             self.publishers[4].publish(-0.6)
             rospy.sleep(2)
-        elif id == 4:
+        elif command == "default":
             for i in range(5):
                 self.publishers[i].publish(self.default_position[i])
 
