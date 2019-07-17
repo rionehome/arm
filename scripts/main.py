@@ -54,7 +54,7 @@ class Main:
             0
         ]
 
-        rospy.Subscriber("/arm/control", Int32, self.callback)
+        rospy.Subscriber("/arm/control", String, self.callback)
 
         rospy.sleep(5)
 
